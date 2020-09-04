@@ -12,6 +12,8 @@ import {
   Play,
   Stop,
   Video,
+  MessageContainer,
+  MessageStyle,
 } from '../styles/CocoContainer';
 import React, { Component } from 'react';
 
@@ -22,6 +24,7 @@ import Nprogress from 'nprogress';
 import anychart from 'anychart';
 import { fas, faFileVideo } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import Message from './Message';
 
 library.add(fas);
 
@@ -37,13 +40,16 @@ class Coco extends Component {
       tableCar: anychart.data.table('x'),
       chart: anychart.stock(),
       verificacion: false,
+      message: null,
     };
+    this.urlVerification();
   }
   videoRef = React.createRef();
   canvasRef = React.createRef();
 
   componentDidMount() {
     Nprogress.start();
+
     document.getElementById('lds-ring').style.visibility = 'visible';
     const webCamPromise = new Promise((resolve) => {
       this.videoRef.current.onloadedmetadata = () => {
@@ -56,7 +62,6 @@ class Coco extends Component {
         document.getElementById('lds-ring').style.visibility = 'visible';
         document.getElementById('canvas');
         this.detectFrame(this.videoRef.current, values[0]);
-        this.toogleGraph(this.videoRef.current, values[0]);
         document.getElementById('lds-ring').style.visibility = 'hidden';
         document.getElementById('video').style.visibility = 'visible';
         document.getElementById('canvas').style.visibility = 'visible';
@@ -67,22 +72,15 @@ class Coco extends Component {
       });
   }
 
-  toogleGraph = (video, model) => {
-    model.detect(video).then((predictions) => {
-      requestAnimationFrame(() => {
-        if (this.state.verificacion) {
-          setTimeout(this.graph(predictions), 5000);
-        }
-        this.toogleGraph(video, model);
-      });
-    });
-  };
-
   detectFrame = (video, model) => {
     model.detect(video).then((predictions) => {
       this.renderPredictions(predictions);
       //setTimeout(this.graph(predictions), 5000);
+
       requestAnimationFrame(() => {
+        if (this.state.verificacion) {
+          this.graph(predictions);
+        }
         this.detectFrame(video, model);
       });
     });
@@ -115,6 +113,7 @@ class Coco extends Component {
       });
       var mappingBus = this.state.tableBus.mapAs({ x: 'x', value: 'bus' });
       if (prediction.class === 'person') {
+        console.log(prediction.class);
         this.state.tablePerson.addData([
           { x: dformat.toString(), person: prediction.score },
         ]);
@@ -190,11 +189,27 @@ class Coco extends Component {
       ctx.fillText(prediction.class, x, y);
     });
   };
+  urlVerification = () => {
+    if (/[^a-zA-Z0-9|\.|\-|\_ ]/g.test(this.props.video)) {
+      this.state.message =
+        'Avoid using special characters (#, *, /, @, $, +) in the video name';
+      return 'Digevo-Video-Demo-Prueba_Coco_02938947589126.mp4';
+    } else {
+      return this.props.video;
+    }
+  };
 
   render() {
     return (
       <div>
-        <FileUpload />
+        <FileUpload video={this.props.video} />
+        {this.state.message ? (
+          <MessageContainer>
+            <MessageStyle>
+              <Message msg={this.state.message} />
+            </MessageStyle>
+          </MessageContainer>
+        ) : null}
         <CocoDiv>
           <div
             id='lds-ring'
@@ -221,7 +236,7 @@ class Coco extends Component {
               style={{ visibility: 'hidden' }}
               crossOrigin='anonymous'>
               <source
-                src='https://9c8e3847ddd5.ngrok.io/getVideo/video.mp4'
+                src={`https://076f50e981e3.ngrok.io/getVideo?video=${this.urlVerification()}`}
                 type='video/mp4'></source>
             </Video>
             <Canvas

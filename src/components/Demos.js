@@ -17,10 +17,10 @@ const Demos = ({ title, description, demo }) => {
         <Icon>
           <a>
             <FontAwesomeIcon
-              className="ic"
+              className='ic'
               icon={['far', 'arrow-alt-circle-down']}
             />
-            Prueba
+            Try
           </a>
         </Icon>
       </Global>

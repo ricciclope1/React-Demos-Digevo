@@ -6,7 +6,7 @@ import Progress from './Progress';
 import axios from 'axios';
 import Nprogress from 'nprogress';
 
-const FileUpload = () => {
+const FileUpload = ({ video }) => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
@@ -26,7 +26,7 @@ const FileUpload = () => {
 
     try {
       const res = await axios.post(
-        'https://9c8e3847ddd5.ngrok.io/upload/',
+        'https://076f50e981e3.ngrok.io/upload/',
         formData,
         {
           headers: {
@@ -50,16 +50,19 @@ const FileUpload = () => {
       setUploadedFile({ fileName, filePath });
 
       setMessage('File Uploaded');
+      setTimeout(window.open(`/?video=${filename}`, '_blank'), 1000);
+
+      window.close();
     } catch (err) {
       if (err.response.status === 500) {
-        setMessage('There was a problem with the server');
+        setMessage(
+          'There was a problem. Avoid using special characters (#, *, /, @, $, +) in the video name.'
+        );
       } else {
         setMessage(err.response.data.msg);
       }
     }
     Nprogress.done();
-    setTimeout(window.open('http://localhost:3000', '_blank'), 500);
-    window.close();
   };
 
   return (

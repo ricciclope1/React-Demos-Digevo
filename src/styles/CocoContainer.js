@@ -37,3 +37,12 @@ export const Stop = styled.button`
   height: 3em;
   margin: 20% 1em 0em 1em;
 `;
+export const MessageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+export const MessageStyle = styled.div`
+  width: 35%;
+  margin-top: 1em;
+  margin-right: 10%;
+`;
