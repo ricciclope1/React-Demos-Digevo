@@ -50,9 +50,15 @@ const FileUpload = ({ video }) => {
       setUploadedFile({ fileName, filePath });
 
       setMessage('File Uploaded');
-      setTimeout(window.open(`?video=${filename}`, '_blank'), 1000);
+      setTimeout(
+        window.open(
+          `https://demos-digevo-react.vercel.app?video=${filename}`,
+          '_blank'
+        ),
+        1000
+      );
 
-      window.close();
+      //window.close();
     } catch (err) {
       if (err.response.status === 500) {
         setMessage(
