@@ -10,7 +10,7 @@ class Navigation extends React.Component {
     return (
       <NavBar>
         <Navbar bg="light" expand="lg" className="nav">
-          <Navbar.Brand className="logo" href="https://demos-digevo.vercel.app">
+          <Navbar.Brand className="logo" href="https://demos-digevo-html.vercel.app/">
             DIGEVO
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -19,19 +19,19 @@ class Navigation extends React.Component {
               <Nav.Link
                 className="option"
                 id="navbar-titles"
-                href="https://demos-digevo.vercel.app"
+                href="https://demos-digevo-html.vercel.app/"
               >
                 Home
               </Nav.Link>
               <NavDropdown title="Demos" id="basic-nav-dropdown">
                 <NavDropdown.Item
-                  href="https://demos-digevo.vercel.app/blazeface.html"
+                  href="https://demos-digevo-html.vercel.app/blazeface.html"
                   className="dd-item"
                 >
                   Blazeface Demo - Vision
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="https://demos-digevo.vercel.app/body-pix.html"
+                  href="https://demos-digevo-html.vercel.app/body-pix.html"
                   className="dd-item"
                 >
                   Body-pix Demo - Vision
@@ -40,20 +40,20 @@ class Navigation extends React.Component {
                   Coco SSD Demo
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="https://demos-digevo.vercel.app/facemesh.html"
+                  href="https://demos-digevo-html.vercel.app/facemesh.html"
                   className="dd-item"
                 >
                   Facemesh Demo - Vision
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
-                  href="https://demos-digevo.vercel.app/camera.html"
+                  href="https://demos-digevo-html.vercel.app/camera.html"
                   className="dd-item"
                 >
                   Pose Estimation - Camera feed demo
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="https://demos-digevo.vercel.app/coco.html"
+                  href="https://demos-digevo-html.vercel.app/coco.html"
                   className="dd-item"
                 >
                   Pose Estimation - Image demo
